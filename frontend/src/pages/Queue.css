@@ -1,0 +1,38 @@
+.queue-page { max-width: 900px; }
+
+.queue-full-list { display: flex; flex-direction: column; gap: 10px; }
+
+.queue-full-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+}
+
+.qf-main { flex: 1; min-width: 0; }
+.qf-title { font-weight: 700; font-size: 14px; margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.qf-artist { font-size: 12px; color: var(--text2); margin-bottom: 6px; }
+.qf-meta { display: flex; gap: 10px; align-items: center; }
+.qf-protocol, .qf-size, .qf-indexer {
+  font-size: 11px;
+  color: var(--text2);
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.qf-right { display: flex; flex-direction: column; align-items: flex-end; gap: 6px; min-width: 140px; }
+.qf-status-text { font-size: 11px; color: var(--text2); text-transform: capitalize; font-weight: 500; }
+.qf-progress-wrap { display: flex; align-items: center; gap: 8px; width: 100%; }
+.qf-progress-bar { flex: 1; height: 5px; background: var(--border); border-radius: 3px; overflow: hidden; }
+.qf-progress-fill { height: 100%; background: var(--accent); border-radius: 3px; transition: width 0.5s; }
+.qf-pct { font-size: 12px; font-weight: 600; color: var(--text); min-width: 32px; text-align: right; }
+.qf-eta { font-size: 11px; color: var(--text2); }
+
+.loading-center { display: flex; justify-content: center; padding: 48px; }

@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    container_name: soundrr-backend
+    restart: unless-stopped
+    volumes:
+      - soundrr-data:/app/data
+    environment:
+      - PORT=3001
+      - JWT_SECRET=${JWT_SECRET:-change-me-in-production}
+      - DB_PATH=/app/data/soundrr.db
+    networks:
+      - soundrr-net
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost:3001/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  frontend:
+    build: ./frontend
+    container_name: soundrr-frontend
+    restart: unless-stopped
+    environment:
+      - REACT_APP_API_URL=/api
+    networks:
+      - soundrr-net
+    depends_on:
+      - backend
+
+  nginx:
+    image: nginx:alpine
+    container_name: soundrr-nginx
+    restart: unless-stopped
+    ports:
+      - "${PORT:-5055}:80"
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - backend
+      - frontend
+    networks:
+      - soundrr-net
+
+volumes:
+  soundrr-data:
+
+networks:
+  soundrr-net:
+    driver: bridge
