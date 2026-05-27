@@ -8,6 +8,11 @@ function debounce(fn, ms) {
   return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), ms); };
 }
 
+function proxyImage(url, API) {
+  if (!url) return null;
+  return `${API}/lidarr/image-proxy?url=${encodeURIComponent(url)}`;
+}
+
 export default function Search() {
   const { API } = useAuth();
   const [query, setQuery] = useState('');
@@ -103,7 +108,8 @@ export default function Search() {
             const key = item.foreignArtistId || item.foreignAlbumId;
             const name = item.artistName || item.title;
             const sub = type === 'album' ? item.artist?.artistName : item.genres?.join(', ');
-            const cover = item.images?.find(i => i.coverType === 'cover')?.url || item.images?.[0]?.url;
+            const rawCover = item.images?.find(i => i.coverType === 'cover')?.url || item.images?.[0]?.url;
+            const cover = proxyImage(rawCover, API);
             const year = item.releaseDate?.split('-')?.[0];
             const isRequested = requested[key];
             const isRequesting = requesting[key];
