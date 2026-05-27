@@ -56,7 +56,7 @@ router.get('/albums', auth, async (req, res) => {
 });
 
 // Image proxy — fetches cover art from Lidarr and passes it to the browser
-router.get('/image-proxy', auth, async (req, res) => {
+router.get('/image-proxy', async (req, res) => {
   const { url } = req.query;
   if (!url) return res.status(400).json({ error: 'URL required' });
 
